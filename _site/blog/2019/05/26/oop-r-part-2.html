@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>A Not So Short Introduction to Object Oriented Programming using R: Part-2</title>
+		<!-- Link to bootstrap css -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+		<!-- Link to main stylesheet -->
+    	<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<!-- Load mathjax_support if required -->
+		
+	</head>
+	
+	<body>
+		<nav>
+    			<ul>
+        			<li><a href="/">Home</a></li>
+	        		<li><a href="/about">About</a></li>
+        			<li><a href="/cv">CV</a></li>
+        			<li><a href="/blog">Blog</a></li>
+    			</ul>
+		</nav>
+		<div class="container">
+    		<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">A Not So Short Introduction to Object Oriented Programming using R: Part-2</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-05-26T18:03:12+05:30" itemprop="datePublished">May 26, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="continuation">Continuation:</h2>
+
+<p>This is the second and last part of the story on the friendly introduction to OOP that I shared in the first post. If you have not yet gone through it, please follow the link to grasp the ideas first. For those, who have had a look, I hope you have enjoyed it. Here we are going to understand the concepts of <strong>Inheritance</strong> and <strong>Polymorphism</strong> in more detail. At the end of this post, you will be a lazy programmer (ha ha!) knowing how to efficiently reuse your previous code.</p>
+
+<p>So let’s come back to the story…</p>
+
+<p>The analogy of your house might not be completely suitable for understanding the idea behind inheritance, rather the real “you” (yes, you) could be the analogy. Typically we all had got something from our ancestors, naturally or legally…wasn’t it? For example, you might have got your favorite old piano from your grand father (legally) or you might have got the friendly nature like him (naturally). Whatever might be the case, you definitely have something new in you and that is completely yours. I bet you have it.</p>
+
+<p>Now, in the programming world, programmers work with many many classes, where writing same methods (functionalities) or using same attributes again and again, are not good ideas. So, they have borrowed the idea from our human relationship as well - they have come up with the idea of Inheritance. Technically, the child class can have all the attributes and methods from the parent class, but still it can have some new attributes and methods, just like us. It’s fun…right? So, let’s explore the concept by a Statistics problem and little bit of coding.</p>
+
+<p><em>So you already have a class to generate random samples from a specified Gaussian Distribution of a specified sample size. Now, let’s say your objective is to extend (reuse) this class to do the same or something additional tasks for a log-normal Distribution.</em></p>
+
+<p><strong>Note:</strong> <em>A log-normal distribution is a continuous probability distribution, whose natural logarithm follows a normal distribution.</em></p>
+
+<p>Obviously we are going to solve it by creating another class, but we have to make sure that we are not reinventing the wheel. For your convenience, the Gaussian Simulator class 
+has been embedded here:</p>
+
+<noscript><pre># A class to generate sample from Gaussian Distribution
+# mean, standard-deviation and sample size are being 
+# expected to come from the user
+
+library(R6)
+library(ggplot2)
+
+GaussianSimulator &lt;- R6Class(&quot;GaussianSimulatorClass&quot;,
+  public = list(
+    mu = NA,
+    sigma = NA,
+    n_sample = NA,
+    sample = NA,
+                       
+    initialize = function(mu, sigma, n_sample) {
+      # Object Initiator
+      # Args
+      #   mu: mean of the distribution
+      #   sigma: std. dev. of the distribution
+      #   n_sample: size of the sample
+                         
+      self$mu &lt;- mu
+      self$sigma &lt;- sigma
+      self$n_sample &lt;- n_sample
+    },
+                       
+    get_sample_size = function() {
+      # getter method
+                         
+      return (self$n_sample)
+    },
+                       
+    set_sample_size = function(size) {
+      # setter method
+                         
+      self$n_sample = size
+    },
+                       
+    generate_sample = function() {
+      # Generates the random sample
+                         
+      self$sample &lt;- rnorm(self$n_sample, self$mu, self$sigma)
+      return (self$sample)
+    },
+                       
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+                         
+      r &lt;- list(sample.mean = mean(self$sample), 
+      sample.sd = sd(self$sample))
+      return (r)
+    },
+                       
+    plot_histogram = function(binwidth) {
+      p &lt;- qplot(self$sample, geom = &quot;histogram&quot;,
+                 breaks = seq(130, 200, binwidth),
+                 colour = I(&quot;black&quot;), fill = I(&quot;white&quot;),
+                 xlab = &quot;X&quot;, ylab = &quot;Count&quot;) +
+            stat_function(
+              fun = function(x, mean, sd, n, bw){
+                      dnorm(x = x, mean = mean, sd = sd) * n * bw
+                    },
+                    args = c(mean = self$mu,
+                             sd = self$sigma, 
+                             n = self$n_sample, 
+                             bw = binwidth)
+            )
+      return (p)
+    }
+  )
+)
+
+#### Implementation ####
+sm &lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) #creates a new object of the class
+r &lt;- sm$generate_sample() #generates a random sample 
+basic.stats &lt;- sm$compute_stats() #computes basic statistics of the sample
+p &lt;- sm$plot_histogram(binwidth=2) #creates the histogram of the sample</pre></noscript>
+<script src="https://gist.github.com/koushikkhan/9e5d608d8ffc284476ad3989f3d6c32d.js"> </script>
+
+<p>To convert a sample, pulled from Normal population, into a log-normal sample, we just need to apply exponentiation. The log-normal class is provided here, which is technically an extension of the previous class:</p>
+
+<noscript><pre>LogNormalSimulator &lt;- R6Class(&quot;LogNormalSimulatorClass&quot;,
+  inherit = GaussianSimulator,
+  public = list(
+    log_normal_sample = NA,
+    initialize = function(mu, sigma, n_sample) {
+      super$initialize(mu = mu, sigma = sigma, n_sample = n_sample)
+    },
+    
+    generate_lognormal_sample = function() {
+      normal_sample &lt;- self$generate_sample()
+      self$log_normal_sample &lt;- exp(normal_sample)
+      return (self$log_normal_sample)
+    },
+    
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+      
+      r &lt;- list(sample.mean = mean(self$log_normal_sample), 
+                sample.sd = sd(self$log_normal_sample))
+      return (r)
+    }
+  )
+)</pre></noscript>
+<script src="https://gist.github.com/koushikkhan/ba1e3719ab417fe14be85d33ac894c3a.js"> </script>
+
+<p>Now let’s discuss about the components of the new class,</p>
+
+<ul>
+  <li><strong>line # 1:</strong> As earlier, it starts with defining the class with a proper name.</li>
+  <li><strong>line # 2:</strong> we are inheriting all the attributes and methods from the previous class, also called super class or parent class.</li>
+  <li><strong>line # 3:</strong> defining the list containing attributes and methods that are available publicly to the user</li>
+  <li><strong>line # 4:</strong> defining the attributes specific to this class, also known as child class.</li>
+  <li><strong>line # 5 and line # 6:</strong> defining the constructor function for child class. Note that it also expects all the parameters which were there in the super class’s constructor 	function. This is so because we are going to call super class’s constructor function at line # 6.</li>
+  <li><strong>line # 9:</strong> defining a method specific to the child class.</li>
+  <li><strong>line # 10:</strong> calling super class’s method generate_sample(). Note that it is possible because we have already inherited everything from super class.</li>
+</ul>
+
+<p>Rest of the things are self explanatory.</p>
+
+<h2 id="implementation">Implementation:</h2>
+
+<p>The implementation is pretty straight forward here, just create object of the <code class="highlighter-rouge">LogNormalSimulator</code> class and you will be ready to access the properties and methods right away,</p>
+
+<noscript><pre>ln.object &lt;- LogNormalSimulator$new(mu = 5, sigma = 0.5, n_sample = 100000)
+ln.sample &lt;- test$generate_lognormal_sample()
+ln.object$compute_stats()</pre></noscript>
+<script src="https://gist.github.com/koushikkhan/5d937c6b8546ce2dfe45117c6d11528b.js"> </script>
+
+<h2 id="polymorphism-and-method-overriding">Polymorphism and Method Overriding:</h2>
+
+<p>There can be scenarios where a method defined in the super class, may not be a good fit for the child class. In that case, the same method (keeping the same name) is defined and implemented in the child class with a different logic. In our case the method <code class="highlighter-rouge">compute_stats()</code> has been defined in both the classes with slightly different logic (identify it!). This is also known as <em>method overriding</em>. The ability to use the same name of a method for different purposes or using it in different forms is known as <em>Polymorphism</em>. It allows the user to use the method covering various situations.</p>
+
+<p>That’s all. Here the second part ends.</p>
+
+<p>Please share your thoughts through the comments section below. It will definitely encourage me to come up with new materials in future. Thank you.</p>
+
+  </div><a class="u-url" href="/blog/2019/05/26/oop-r-part-2" hidden></a>
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://https-koushikkhan-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+		</div><!-- /.container -->
+		<footer>
+    			<ul>
+        			<li><a href="mailto:write2koushik.stat@outlook.com">Email</a></li>
+        			<li><a href="https://github.com/koushikkhan">Github</a></li>
+					<li><a href="https://www.linkedin.com/in/koushikkhan">LinkedIn</a></li>
+				</ul>
+		</footer>
+		<script id="dsq-count-scr" src="//SHORTNAME.disqus.com/count.js" async></script>
+	</body>
+</html>

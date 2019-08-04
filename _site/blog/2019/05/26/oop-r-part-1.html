@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>A Not So Short Introduction to Object Oriented Programming using R: Part-I</title>
+		<!-- Link to bootstrap css -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+		<!-- Link to main stylesheet -->
+    	<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<!-- Load mathjax_support if required -->
+		
+	</head>
+	
+	<body>
+		<nav>
+    			<ul>
+        			<li><a href="/">Home</a></li>
+	        		<li><a href="/about">About</a></li>
+        			<li><a href="/cv">CV</a></li>
+        			<li><a href="/blog">Blog</a></li>
+    			</ul>
+		</nav>
+		<div class="container">
+    		<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">A Not So Short Introduction to Object Oriented Programming using R: Part-I</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-05-26T18:03:12+05:30" itemprop="datePublished">May 26, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="introduction">Introduction:</h2>
+
+<p>Object Oriented Programming or simply called as OOP, is a different style of designing and solving problems using computer programs. While designing the solution of any problem, OOP helps us to relate various components of our program with real world entities. It makes the code more usable and easily maintainable, not only that, OOP helps to create composite data structures like <em>linked list</em>, <em>trie</em> etc. using primitive ones like integer, float, string etc.</p>
+
+<p>I will start this article with some theoretical basics of OOP followed by their implementations and some examples from Statistical Distributions, so that people like me who are coming from quantitative background (no so smart in Coding!) can easily relate to OOP with their fundamentals.</p>
+
+<h2 id="some-basic-terminologies">Some basic terminologies:</h2>
+
+<ul>
+  <li>
+    <p><strong>Class - The Template of your imagination:</strong> Let’s assume, you want to build your own house and the house plan is ready. Based on the plan, the builder will build the house. Here the actual house where you are going to stay is the realization coming out from that plan. In the world of programming, while developing any kind of software projects, people do have their plans as well. These are generally plans to receive various type of data as inputs, functions to manipulate those data and also the ways to let the human interact with the software. Such plans are called templates or classes.</p>
+  </li>
+  <li>
+    <p><strong>Object - Meet your imagination:</strong> You will definitely meet your imagination when the builder will make the house available for your stay. Similarly, in programming world such realization is available, which is called object. Object is very very important in programming without which you would never meet your imagination.</p>
+  </li>
+  <li>
+    <p><strong>Encapsulation - Wrapping up the units of your realization:</strong> Your house, the realization, typically contains various small units like rooms, doors, windows etc., and you can consider it as if the house is wrapping up those units or in other words those units are somehow related to each other by the entire house. Now, if you think about any moderate to complex program, it generally contains many many variables containing data as well as functions to perform computations with those variables. By the help of a class, these variables and functions are related to each other just like doors and windows and they all are the parts of the class. This is known as Encapsulation. Variables and functions defined within a class are called attributes (properties) and methods. When you create an object using the class, all of those attributes and methods will be available for it.</p>
+  </li>
+  <li>
+    <p><strong>Inheritance:</strong> Generally, in a real life scenario you can have multiple houses, but many of them can contain same designs like same colour of the bedroom (your favorite colour of course), same floor area of kitchen etc. This actually means that you are following (rather mimicking) some (or all) of the designs of your past house into future ones. In other words, you can say, the houses you have built later on, are inheriting some (or all) of the designs from the initial house. While creating multiple classes, the programmer try to avoid writing same functions or incorporating same variables again and again. The concept inheritance allows a programmer to have all the attributes or methods available in parent class, in the child class as well.</p>
+  </li>
+  <li>
+    <p><strong>Polymorphism:</strong> The literal meaning of the word is something that is available in various forms but with the same name or any identifier. For example, your house could have multiple washroom, they might be different in terms of internal designs but they all are washrooms. Similarly, two or multiple classes can can contain one or more functions with same name but performing different activities. This idea is known as Polymorphism.</p>
+  </li>
+</ul>
+
+<h2 id="designing-the-class">Designing the class;</h2>
+
+<p>As the title suggests, I will be covering the aforesaid concepts using <strong>R</strong>. Although R is not a language where the analytics people generally implement OOP mostly because of the lack of awareness or simply not to follow the hard way. But R has several ecosystem for implementing OOP and eventually designing analytics solutions. One of the popular OOP ecosystems in R is <strong>R6</strong>. It’s a third party package developed by Winston Chang* from the <a href="https://www.rstudio.com/">RStudio Team</a>. It provides ways to create classes in R.</p>
+
+<p>Before implementation, let’s discuss about the problem,</p>
+
+<p><em>Suppose, for curiosity, you want to generate random samples from various Gaussian Distribution parametrized by mean (μ) and standard deviation (σ). For example: if you put some specific values of μ and σ, then you have a specific Gaussian population and you want to have a random sample out of it.</em></p>
+
+<p>Let’s design the class to solve the problem,</p>
+
+<noscript><pre># A class to generate sample from Gaussian Distribution
+# mean, standard-deviation and sample size are being 
+# expected to come from the user
+
+library(R6)
+library(ggplot2)
+
+GaussianSimulator &lt;- R6Class(&quot;GaussianSimulatorClass&quot;,
+  public = list(
+    mu = NA,
+    sigma = NA,
+    n_sample = NA,
+    sample = NA,
+                       
+    initialize = function(mu, sigma, n_sample) {
+      # Object Initiator
+      # Args
+      #   mu: mean of the distribution
+      #   sigma: std. dev. of the distribution
+      #   n_sample: size of the sample
+                         
+      self$mu &lt;- mu
+      self$sigma &lt;- sigma
+      self$n_sample &lt;- n_sample
+    },
+                       
+    get_sample_size = function() {
+      # getter method
+                         
+      return (self$n_sample)
+    },
+                       
+    set_sample_size = function(size) {
+      # setter method
+                         
+      self$n_sample = size
+    },
+                       
+    generate_sample = function() {
+      # Generates the random sample
+                         
+      self$sample &lt;- rnorm(self$n_sample, self$mu, self$sigma)
+      return (self$sample)
+    },
+                       
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+                         
+      r &lt;- list(sample.mean = mean(self$sample), 
+      sample.sd = sd(self$sample))
+      return (r)
+    },
+                       
+    plot_histogram = function(binwidth) {
+      p &lt;- qplot(self$sample, geom = &quot;histogram&quot;,
+                 breaks = seq(130, 200, binwidth),
+                 colour = I(&quot;black&quot;), fill = I(&quot;white&quot;),
+                 xlab = &quot;X&quot;, ylab = &quot;Count&quot;) +
+            stat_function(
+              fun = function(x, mean, sd, n, bw){
+                      dnorm(x = x, mean = mean, sd = sd) * n * bw
+                    },
+                    args = c(mean = self$mu,
+                             sd = self$sigma, 
+                             n = self$n_sample, 
+                             bw = binwidth)
+            )
+      return (p)
+    }
+  )
+)
+
+#### Implementation ####
+sm &lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) #creates a new object of the class
+r &lt;- sm$generate_sample() #generates a random sample 
+basic.stats &lt;- sm$compute_stats() #computes basic statistics of the sample
+p &lt;- sm$plot_histogram(binwidth=2) #creates the histogram of the sample</pre></noscript>
+<script src="https://gist.github.com/koushikkhan/9e5d608d8ffc284476ad3989f3d6c32d.js"> </script>
+
+<p>Here we have the class ready. Now let’s discuss each and every unit (variable and function) within it.</p>
+
+<ul>
+  <li>
+    <p><strong>class name:</strong> First thing is the usage of the function <code class="highlighter-rouge">R6Class()</code>, it allows us to create the class and define it’s units. The name of the class is <code class="highlighter-rouge">GaussianSimulatorClass</code> and the variable <code class="highlighter-rouge">GaussianSimulator</code> is used to store the address of the class created somewhere in the memory.</p>
+  </li>
+  <li>
+    <p><strong>‘public’ keyword:</strong> The <em>public</em> keyword is used to allow the user to interact with the components that it contains, like <code class="highlighter-rouge">mu</code>, <code class="highlighter-rouge">sigma</code>, <code class="highlighter-rouge">n_sample</code>, <code class="highlighter-rouge">sample</code> and all the functions. On the contrary, if we would have used <em>private</em>, then the user won’t be able to interact / use with them. It is customary to use private keyword to hide important components of the program from the user. It avoids unintentional fatal error during execution.</p>
+  </li>
+  <li>
+    <p><strong>attributes:</strong> We have used four attributes in our class and these are <code class="highlighter-rouge">mu</code>, <code class="highlighter-rouge">sigma</code>, <code class="highlighter-rouge">n_sample</code> and <code class="highlighter-rouge">sample</code>.</p>
+  </li>
+  <li>
+    <p><strong>constructor:</strong> Each class does have it’s constructor. A constructor is a simple function that is first executed while creating an object of the class. So if you provide some of the attributes while creating the object, it will pass those attributes to the internal attributes. Like, we have provided mu, sigma and n_sample through our constructor to initiate a specific Gaussian Distribution. Note one thing, if you don’t write your constructor explicitly, the OOP system creates a default constructor for it.</p>
+  </li>
+  <li>
+    <p><strong>‘self’ keyword:</strong> <code class="highlighter-rouge">self</code> keyword is used to represent a placeholder of our object while we are designing the class itself. When you create an object of the class, internally <code class="highlighter-rouge">self</code> is replaced by the object name.</p>
+  </li>
+  <li>
+    <p><strong>getter and setter methods:</strong> These are the utility functions to let the user know about internal data (attributes) or to change them as per users’ choice externally. For example, after creating an object, we can get the n_sample using <code class="highlighter-rouge">get_sample_size()</code>, that is currently being used or we can change <code class="highlighter-rouge">n_sample</code> by using <code class="highlighter-rouge">set_sample_size()</code>.</p>
+  </li>
+  <li>
+    <p><strong><code class="highlighter-rouge">generate_sample()</code> method:</strong> This is one of the functions to achieve our goal. It generates the random sample of a specified size from a specified Gaussian Distribution.</p>
+  </li>
+  <li>
+    <p><strong><code class="highlighter-rouge">compute_stats()</code> method:</strong> This function is used to compute the sample mean and sample standard deviation.</p>
+  </li>
+  <li>
+    <p><strong><code class="highlighter-rouge">plot_histogram()</code> method:</strong> This function is used to create a frequency type histogram from the sample you have generated. It has a parameter, binwidth, which is used to set the width of bins in the histogram.</p>
+  </li>
+</ul>
+
+<h2 id="usage-of-the-class">Usage of the class:</h2>
+
+<p>Finally, it’s the time to use our class to solve the problem.</p>
+
+<noscript><pre># Usage of the class
+
+# 1. create a new object of the class named `sm`
+sm &lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) 
+
+# 2. generate a random sample
+r &lt;- sm$generate_sample()
+
+# 3. compute basic ststistics of the sample
+basic.stats &lt;- sm$compute_stats()
+
+# 4. create the histogram of the sample
+p &lt;- sm$plot_histogram(binwidth = 2)
+</pre></noscript>
+<script src="https://gist.github.com/koushikkhan/9cded47d515faa76dba48c651d7cebd2.js"> </script>
+
+<p>Here is the histogram given below, that has been generated using <code class="highlighter-rouge">plot_histogram()</code> method from the class.</p>
+
+<p><img src="/images/dist.png?style=centerme" alt="test" /></p>
+
+<p>That’s all. We have solved our problem using OOP and I hope you can now relate the concept of OOP to solve much more complex problems. I have kept the <strong>Inheritance</strong> and <strong>Polymorphism</strong> parts separated, you can find the second part here.</p>
+
+<p>Please share your thoughts through the comments section below. It will help me to add new things or do more research. Happy Coding!</p>
+
+  </div><a class="u-url" href="/blog/2019/05/26/oop-r-part-1" hidden></a>
+</article>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://https-koushikkhan-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+		</div><!-- /.container -->
+		<footer>
+    			<ul>
+        			<li><a href="mailto:write2koushik.stat@outlook.com">Email</a></li>
+        			<li><a href="https://github.com/koushikkhan">Github</a></li>
+					<li><a href="https://www.linkedin.com/in/koushikkhan">LinkedIn</a></li>
+				</ul>
+		</footer>
+		<script id="dsq-count-scr" src="//SHORTNAME.disqus.com/count.js" async></script>
+	</body>
+</html>

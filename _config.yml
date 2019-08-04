@@ -1,0 +1,6 @@
+markdown: kramdown
+exclude: ['README.md']
+permalink: /blog/:year/:month/:day/:title
+plugins:
+  - jekyll-gist
+theme: jekyll-theme-slate

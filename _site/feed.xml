@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-25T23:20:31+05:30</updated><id>http://localhost:4000/feed.xml</id><entry><title type="html">Testing of Hypotheses: A Quick Refresher</title><link href="http://localhost:4000/blog/2019/07/25/stat-hypo-test" rel="alternate" type="text/html" title="Testing of Hypotheses: A Quick Refresher" /><published>2019-07-25T00:00:00+05:30</published><updated>2019-07-25T00:00:00+05:30</updated><id>http://localhost:4000/blog/2019/07/25/stat-hypo-test</id><content type="html" xml:base="http://localhost:4000/blog/2019/07/25/stat-hypo-test">&lt;h2 id=&quot;introduction&quot;&gt;Introduction:&lt;/h2&gt;
+
+&lt;p&gt;The small story, that I am going to share with you today, is on Statistical Testing of Hypothesis. It is a method of statistical inference with a very powerful theoretical support in the literature and a wide domain of application, especially in today’s world of analytics and machine learning.&lt;/p&gt;
+
+&lt;p&gt;It was popularized early in the 20th century, early forms were used in the 1700s. The first use is credited to John Arbuthnot (1710) followed by Pierre-Simon Laplace (1770s), in analyzing the human sex ratio at birth.&lt;/p&gt;
+
+&lt;p&gt;The word &lt;em&gt;Hypothesis&lt;/em&gt; means belief about something. People from various domains like theoretical research, medical industry, consumer packaged goods (CPG) industry etc., mainly deal with data to boost-up their research works, or to maximize their revenue, whatever may be the case, they use this important tool to justify their believes. Now, here the question comes…what are these believes about? The answer is parameters. For example: suppose you are going to calculate the average height of people in a district, which you can by measuring the height of each people and taking the average or by taking a sample of people from that district, calculating the sample average and making an inference about the average height.&lt;/p&gt;
+
+&lt;p&gt;If you go by the first approach, you need patience, man power, money and of course a lot of time, whereas in the second approach you can get a ruff estimate of the actual average height which will help you to draw an inference.&lt;/p&gt;
+
+&lt;p&gt;Now, clearly the actual average height is unknown as long as you are not dealing with all the people in that district. This unknown average height is called a &lt;strong&gt;parameter&lt;/strong&gt;, often expressed as &lt;script type=&quot;math/tex&quot;&gt;\mu&lt;/script&gt; and the sample average is known as &lt;strong&gt;statistic&lt;/strong&gt;, expressed as &lt;script type=&quot;math/tex&quot;&gt;\bar{X}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;By using a statistic, we try to get some plausible guesses about our parameter of interest. Since, we are guessing or having some believes about the parameter, these believes must be justified logically by the help of some mathematical tools as well as data. Hypothesis Testing comes here to rescue us.&lt;/p&gt;
+
+&lt;h2 id=&quot;an-intuitive-explanation&quot;&gt;An Intuitive Explanation:&lt;/h2&gt;
+
+&lt;p&gt;Before going into more rigorous definitions, let’s understand by taking another example. Suppose, by conducting a small survey, you picked up ten people having the heights (in ft.) as &lt;script type=&quot;math/tex&quot;&gt;6.8, 7.3, 6.0, 7.0, 6.3, 7.0, 6.5, 6.5, 7.0, 7.4&lt;/script&gt;. They are very tall, aren’t they?&lt;/p&gt;
+
+&lt;p&gt;This is your artificial survey data. You can calculate the average which is 6.8 ft. But truly speaking, you won’t be satisfied by having a belief that actual average height of the people in that district is 6.8 ft. It can be for that specific sample you have collected. If you take another sample of size 10, you may get a different estimate…right? Yes, so what you have a achieved, is the random guess about the parameter (unknown height) based on a random sample.&lt;/p&gt;
+
+&lt;p&gt;Now, let’s define the various hypotheses that will be in your mind soon:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;The Null Hypothesis&lt;/strong&gt;, &lt;script type=&quot;math/tex&quot;&gt;H_0: \mu = 6.4 = \mu_0&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;The Alternate Hypothesis&lt;/strong&gt;, &lt;script type=&quot;math/tex&quot;&gt;H_1: \mu &gt; 6.4&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note that, &lt;script type=&quot;math/tex&quot;&gt;\mu&lt;/script&gt; is used here to parametrize the scenario. The type of alternate hypothesis we are addressing here, is also  called &lt;em&gt;greater than type hypothesis&lt;/em&gt; and hence the test is called &lt;em&gt;greater than type test&lt;/em&gt;. &lt;/p&gt;
+
+&lt;p&gt;Null hypothesis is the prior belief you have about the parameter, possibly by conducting other surveys in the adjacent districts i.e. by observing people from other districts, you believe average height may be 6 ft.. The alternate hypothesis is the belief you have gathered from the sample or the data.
+Since we are guessing based on the data in our hand, it’s very likely to guess wrong or in another words, we may encounter errors.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-two-types-of-error&quot;&gt;The Two Types of Error:&lt;/h2&gt;
+
+&lt;p&gt;There are two types of error that we are generally interested in:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rejecting the null hypothesis when it is actually true, also known as Type-I 
+error.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Failing to reject the null hypothesis when it is actually false, also known
+as Type-II error.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These two situations are generally expressed in terms of probabilities.&lt;/p&gt;
+
+&lt;p&gt;Let’s see how they have been defined in the literature,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Probability of type-I error:
+&lt;script type=&quot;math/tex&quot;&gt;P(\text{Rejecting} \quad H_0 \quad \text{when it is true}) = \alpha&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Probability of type-II error: 
+&lt;script type=&quot;math/tex&quot;&gt;P(\text{Failing to reject} \quad H_0 \quad \text{when it is false}) = \beta&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;some-real-life-examples&quot;&gt;Some Real Life Examples:&lt;/h3&gt;
+
+&lt;p&gt;I will try to relate the definitions with couple of examples:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Suppose the Honorable judge is about to give his verdict to the accused. 
+Now let’s assume that our null hypothesis or prior belief about that person is, &lt;em&gt;the person is not guilty&lt;/em&gt;. If the judge’s verdict is against the accused even if the person has really not done anything wrong, then it is the &lt;em&gt;Type-I error&lt;/em&gt;, whereas if the verdict is in favor of the accused when in reality the person has done something wrong, then it is the &lt;em&gt;Type-II error&lt;/em&gt;. If you’d think for a moment, you would understand the fact that Type-I error is more severe in nature.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;This one is going to be of great impotance for the society. We know that 
+almost every country has their own military radar system to detect any missilies aimed at them. Assume that, the null hypothesis is &lt;em&gt;the enemy is in war mode, they will attack&lt;/em&gt;. Now, could you imagine the situation, if the military radar system would have failed to detect the missiles that had been aimed at your country and they were few miles away from their target…the lives of innocent citizens would have been devastated.&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;/images/radar_not_detecting.png?style=centerme&quot; alt=&quot;fig-1&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Having understood the importance of Type-I error in decision making, the usual tendency of the experimenter is to keep the chance of making Type-I error fixed at a very low level, which, by years of research and experimentations, has been chosen as 1% or 5%, depending on the situation.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-testing-criteria-or-the-decision-rule&quot;&gt;The Testing Criteria or The Decision Rule:&lt;/h2&gt;
+
+&lt;p&gt;Having identified the possible scenarioes which may take us to the wrong direction, it’s time to decide which one to go for, based on the current data in hand. The tool which will enable us to make a decision, is going to be the &lt;strong&gt;statistic&lt;/strong&gt; along with a decision rule.&lt;/p&gt;
+
+&lt;p&gt;Having the data ready, we can find the realization of the statistic, i.e. &lt;script type=&quot;math/tex&quot;&gt;\bar{x}&lt;/script&gt; and to support our null hypothesis, we are supposed to compare this &lt;script type=&quot;math/tex&quot;&gt;\bar{x}&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\mu_0&lt;/script&gt;. Here we perform an additive comparison i.e. we measure the difference between these two values. If the difference is too high, then it depicts the fact that our data is not supporting the null hypothesis.&lt;/p&gt;
+
+&lt;p&gt;Wait…, the phrase &lt;em&gt;too high&lt;/em&gt; is subjective, isn’t it? That means the threshold to judge whether the difference is &lt;em&gt;too high&lt;/em&gt; or not, depends on the experimenter.&lt;/p&gt;
+
+&lt;p&gt;To avoid this problem, Statisticians came up with a universal procedure to compute the threshold (sometimes called &lt;em&gt;cut-off&lt;/em&gt; value). It is probabilistic in nature which utilizes the the sampling distribution of the statistic along with &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before going to understand the computation process, let’s modify the statistic.
+Instead of &lt;script type=&quot;math/tex&quot;&gt;\bar{X}&lt;/script&gt;, we are going to take &lt;script type=&quot;math/tex&quot;&gt;\frac{\bar{X} - \mu_0}{\sqrt{\frac{\sigma^2}{n}}}&lt;/script&gt;. From the theory of sampling distribution, if &lt;script type=&quot;math/tex&quot;&gt;\bar{X} \sim N(\mu_0, \sigma^2)&lt;/script&gt;, then &lt;script type=&quot;math/tex&quot;&gt;Z = \frac{\bar{X} - \mu_0}{\sqrt{\frac{\sigma^2}{n}}} \sim N(0, 1)&lt;/script&gt; i.e. the transformation makes the distribution simplified and easy to deal with.&lt;/p&gt;
+
+&lt;p&gt;To compute a universal threshold or cut-off point (&lt;script type=&quot;math/tex&quot;&gt;\tau_{\alpha}&lt;/script&gt;), &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; is first kept fixed at a certain level, usually 0.01 or 0.05, then a quantile value is computed such that beyond the quantile area under the curve is equal to &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. The figure, given below, will make the idea clear.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/cutoff.jpg?style=centerme&quot; alt=&quot;fig-2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As we can see in the above figure, the universal cut-off is 2.32. Now we are in a situation to make a decision. If the realization of &lt;script type=&quot;math/tex&quot;&gt;\frac{\bar{X} - \mu_0}{\sqrt{\frac{\sigma^2}{n}}}&lt;/script&gt; is more than &lt;script type=&quot;math/tex&quot;&gt;\tau_{\alpha}=2.32&lt;/script&gt;, then
+we can say that the data is not supporting &lt;script type=&quot;math/tex&quot;&gt;H_0&lt;/script&gt;, hence we should reject it, otherwise we can accept &lt;script type=&quot;math/tex&quot;&gt;H_0&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the survey data example, sample size is &lt;script type=&quot;math/tex&quot;&gt;n=10&lt;/script&gt;, the sample average is &lt;script type=&quot;math/tex&quot;&gt;\bar{x}=6.8&lt;/script&gt; ft. and assuming &lt;script type=&quot;math/tex&quot;&gt;\sigma&lt;/script&gt; to be known as 0.45 ft., the realization of the statistic, also known as &lt;script type=&quot;math/tex&quot;&gt;z^{\star}&lt;/script&gt;, is &lt;script type=&quot;math/tex&quot;&gt;\frac{\sqrt{10} \times (6.8 - 6.4)}{0.45}=2.8&lt;/script&gt; and it is certainly larger than &lt;script type=&quot;math/tex&quot;&gt;\tau_{\alpha}&lt;/script&gt;. Hence, the average height of people of that district cannot be taken as 6 ft., based on the sample in our hand.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-probabilistic-decision-rule&quot;&gt;The Probabilistic Decision Rule:&lt;/h2&gt;
+
+&lt;p&gt;The decision we made in the last section, was based on a threshold or a cut-off point. It could have been represented in an alternative way, by using a two probability scores, one of which is known to us i.e. &lt;script type=&quot;math/tex&quot;&gt;\alpha = 0.01&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;The second one is computed as the area under the density curve beyond the observed value of the statistic &lt;script type=&quot;math/tex&quot;&gt;z^{\star}&lt;/script&gt; i.e. &lt;script type=&quot;math/tex&quot;&gt;p = P\left[Z &gt; z^{\star}\right]&lt;/script&gt;, considering null hypothesis to be true, where &lt;script type=&quot;math/tex&quot;&gt;Z \sim N(0, 1)&lt;/script&gt;. This &lt;script type=&quot;math/tex&quot;&gt;p&lt;/script&gt; is known as &lt;em&gt;p-value&lt;/em&gt; of the test.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/p_value.jpg?style=centerme&quot; alt=&quot;fig-3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the above figure, &lt;em&gt;blue&lt;/em&gt; region is the &lt;em&gt;p-value&lt;/em&gt; and the &lt;em&gt;red&lt;/em&gt; region is the &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. Note that, the realization of the statistic i.e. &lt;script type=&quot;math/tex&quot;&gt;z^{\star}&lt;/script&gt; is larger than the cut-off, that is why the p-value is smaller than &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;Therefore, in an alternative way, we can say that if p-value of the test is smaller than probability of Type-I error, then we should reject the null hypothesis, otherwise it should be accepted. Almost all the modern analytics tools provide p-value for any kind of hypothesis test.&lt;/p&gt;
+
+&lt;h2 id=&quot;assumption-of-the-test-and-conclusion&quot;&gt;Assumption of the Test and Conclusion:&lt;/h2&gt;
+
+&lt;p&gt;The test I have discussed here, is based on a single assumption: pupulation variance (&lt;script type=&quot;math/tex&quot;&gt;\sigma^2&lt;/script&gt;) is fixed and known beforehand. It could be unknow as well, in that case, first we had to estimate it from the data. It would also change the distribution of the test statistic.&lt;/p&gt;
+
+&lt;p&gt;Regarding the final conclusion: well, we have seen that the null hypothesis is not supported by the data in our hand, so it should not be accepted.&lt;/p&gt;
+
+&lt;h2 id=&quot;future-scope&quot;&gt;Future Scope:&lt;/h2&gt;
+
+&lt;p&gt;In this article, testing procedure for a specific setup has been covered. There are lot more to look into, specifically the scenarios when population variability measure &lt;script type=&quot;math/tex&quot;&gt;\sigma&lt;/script&gt; is not known, comparing variabilities from two different populations etc. Those things will be covered in near future.&lt;/p&gt;
+
+&lt;p&gt;Note that alternative hypothesis can also have three different variants: &lt;em&gt;less than type&lt;/em&gt; and &lt;em&gt;unequal type&lt;/em&gt;, we have only covered one.&lt;/p&gt;
+
+&lt;p&gt;If you have enjoyed this article, please do share your thoughts through the comment section below.&lt;/p&gt;</content><author><name></name></author><category term="R" /><category term="OOP" /><category term="R6" /><summary type="html">Introduction: The small story, that I am going to share with you today, is on Statistical Testing of Hypothesis. It is a method of statistical inference with a very powerful theoretical support in the literature and a wide domain of application, especially in today’s world of analytics and machine learning. It was popularized early in the 20th century, early forms were used in the 1700s. The first use is credited to John Arbuthnot (1710) followed by Pierre-Simon Laplace (1770s), in analyzing the human sex ratio at birth. The word Hypothesis means belief about something. People from various domains like theoretical research, medical industry, consumer packaged goods (CPG) industry etc., mainly deal with data to boost-up their research works, or to maximize their revenue, whatever may be the case, they use this important tool to justify their believes. Now, here the question comes…what are these believes about? The answer is parameters. For example: suppose you are going to calculate the average height of people in a district, which you can by measuring the height of each people and taking the average or by taking a sample of people from that district, calculating the sample average and making an inference about the average height. If you go by the first approach, you need patience, man power, money and of course a lot of time, whereas in the second approach you can get a ruff estimate of the actual average height which will help you to draw an inference. Now, clearly the actual average height is unknown as long as you are not dealing with all the people in that district. This unknown average height is called a parameter, often expressed as and the sample average is known as statistic, expressed as . By using a statistic, we try to get some plausible guesses about our parameter of interest. Since, we are guessing or having some believes about the parameter, these believes must be justified logically by the help of some mathematical tools as well as data. Hypothesis Testing comes here to rescue us. An Intuitive Explanation: Before going into more rigorous definitions, let’s understand by taking another example. Suppose, by conducting a small survey, you picked up ten people having the heights (in ft.) as . They are very tall, aren’t they? This is your artificial survey data. You can calculate the average which is 6.8 ft. But truly speaking, you won’t be satisfied by having a belief that actual average height of the people in that district is 6.8 ft. It can be for that specific sample you have collected. If you take another sample of size 10, you may get a different estimate…right? Yes, so what you have a achieved, is the random guess about the parameter (unknown height) based on a random sample. Now, let’s define the various hypotheses that will be in your mind soon: The Null Hypothesis, The Alternate Hypothesis, Note that, is used here to parametrize the scenario. The type of alternate hypothesis we are addressing here, is also called greater than type hypothesis and hence the test is called greater than type test.  Null hypothesis is the prior belief you have about the parameter, possibly by conducting other surveys in the adjacent districts i.e. by observing people from other districts, you believe average height may be 6 ft.. The alternate hypothesis is the belief you have gathered from the sample or the data. Since we are guessing based on the data in our hand, it’s very likely to guess wrong or in another words, we may encounter errors. The Two Types of Error: There are two types of error that we are generally interested in: Rejecting the null hypothesis when it is actually true, also known as Type-I error. Failing to reject the null hypothesis when it is actually false, also known as Type-II error. These two situations are generally expressed in terms of probabilities. Let’s see how they have been defined in the literature, Probability of type-I error: Probability of type-II error: Some Real Life Examples: I will try to relate the definitions with couple of examples: Suppose the Honorable judge is about to give his verdict to the accused. Now let’s assume that our null hypothesis or prior belief about that person is, the person is not guilty. If the judge’s verdict is against the accused even if the person has really not done anything wrong, then it is the Type-I error, whereas if the verdict is in favor of the accused when in reality the person has done something wrong, then it is the Type-II error. If you’d think for a moment, you would understand the fact that Type-I error is more severe in nature. This one is going to be of great impotance for the society. We know that almost every country has their own military radar system to detect any missilies aimed at them. Assume that, the null hypothesis is the enemy is in war mode, they will attack. Now, could you imagine the situation, if the military radar system would have failed to detect the missiles that had been aimed at your country and they were few miles away from their target…the lives of innocent citizens would have been devastated. Having understood the importance of Type-I error in decision making, the usual tendency of the experimenter is to keep the chance of making Type-I error fixed at a very low level, which, by years of research and experimentations, has been chosen as 1% or 5%, depending on the situation. The Testing Criteria or The Decision Rule: Having identified the possible scenarioes which may take us to the wrong direction, it’s time to decide which one to go for, based on the current data in hand. The tool which will enable us to make a decision, is going to be the statistic along with a decision rule. Having the data ready, we can find the realization of the statistic, i.e. and to support our null hypothesis, we are supposed to compare this and . Here we perform an additive comparison i.e. we measure the difference between these two values. If the difference is too high, then it depicts the fact that our data is not supporting the null hypothesis. Wait…, the phrase too high is subjective, isn’t it? That means the threshold to judge whether the difference is too high or not, depends on the experimenter. To avoid this problem, Statisticians came up with a universal procedure to compute the threshold (sometimes called cut-off value). It is probabilistic in nature which utilizes the the sampling distribution of the statistic along with . Before going to understand the computation process, let’s modify the statistic. Instead of , we are going to take . From the theory of sampling distribution, if , then i.e. the transformation makes the distribution simplified and easy to deal with. To compute a universal threshold or cut-off point (), is first kept fixed at a certain level, usually 0.01 or 0.05, then a quantile value is computed such that beyond the quantile area under the curve is equal to . The figure, given below, will make the idea clear. As we can see in the above figure, the universal cut-off is 2.32. Now we are in a situation to make a decision. If the realization of is more than , then we can say that the data is not supporting , hence we should reject it, otherwise we can accept . For the survey data example, sample size is , the sample average is ft. and assuming to be known as 0.45 ft., the realization of the statistic, also known as , is and it is certainly larger than . Hence, the average height of people of that district cannot be taken as 6 ft., based on the sample in our hand. The Probabilistic Decision Rule: The decision we made in the last section, was based on a threshold or a cut-off point. It could have been represented in an alternative way, by using a two probability scores, one of which is known to us i.e. . The second one is computed as the area under the density curve beyond the observed value of the statistic i.e. , considering null hypothesis to be true, where . This is known as p-value of the test. In the above figure, blue region is the p-value and the red region is the . Note that, the realization of the statistic i.e. is larger than the cut-off, that is why the p-value is smaller than . Therefore, in an alternative way, we can say that if p-value of the test is smaller than probability of Type-I error, then we should reject the null hypothesis, otherwise it should be accepted. Almost all the modern analytics tools provide p-value for any kind of hypothesis test. Assumption of the Test and Conclusion: The test I have discussed here, is based on a single assumption: pupulation variance () is fixed and known beforehand. It could be unknow as well, in that case, first we had to estimate it from the data. It would also change the distribution of the test statistic. Regarding the final conclusion: well, we have seen that the null hypothesis is not supported by the data in our hand, so it should not be accepted. Future Scope: In this article, testing procedure for a specific setup has been covered. There are lot more to look into, specifically the scenarios when population variability measure is not known, comparing variabilities from two different populations etc. Those things will be covered in near future. Note that alternative hypothesis can also have three different variants: less than type and unequal type, we have only covered one. If you have enjoyed this article, please do share your thoughts through the comment section below.</summary></entry><entry><title type="html">A Not So Short Introduction to Object Oriented Programming using R: Part-I</title><link href="http://localhost:4000/blog/2019/05/26/oop-r-part-1" rel="alternate" type="text/html" title="A Not So Short Introduction to Object Oriented Programming using R: Part-I" /><published>2019-05-26T18:03:12+05:30</published><updated>2019-05-26T18:03:12+05:30</updated><id>http://localhost:4000/blog/2019/05/26/oop-r-part-1</id><content type="html" xml:base="http://localhost:4000/blog/2019/05/26/oop-r-part-1">&lt;h2 id=&quot;introduction&quot;&gt;Introduction:&lt;/h2&gt;
+
+&lt;p&gt;Object Oriented Programming or simply called as OOP, is a different style of designing and solving problems using computer programs. While designing the solution of any problem, OOP helps us to relate various components of our program with real world entities. It makes the code more usable and easily maintainable, not only that, OOP helps to create composite data structures like &lt;em&gt;linked list&lt;/em&gt;, &lt;em&gt;trie&lt;/em&gt; etc. using primitive ones like integer, float, string etc.&lt;/p&gt;
+
+&lt;p&gt;I will start this article with some theoretical basics of OOP followed by their implementations and some examples from Statistical Distributions, so that people like me who are coming from quantitative background (no so smart in Coding!) can easily relate to OOP with their fundamentals.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-basic-terminologies&quot;&gt;Some basic terminologies:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Class - The Template of your imagination:&lt;/strong&gt; Let’s assume, you want to build your own house and the house plan is ready. Based on the plan, the builder will build the house. Here the actual house where you are going to stay is the realization coming out from that plan. In the world of programming, while developing any kind of software projects, people do have their plans as well. These are generally plans to receive various type of data as inputs, functions to manipulate those data and also the ways to let the human interact with the software. Such plans are called templates or classes.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Object - Meet your imagination:&lt;/strong&gt; You will definitely meet your imagination when the builder will make the house available for your stay. Similarly, in programming world such realization is available, which is called object. Object is very very important in programming without which you would never meet your imagination.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Encapsulation - Wrapping up the units of your realization:&lt;/strong&gt; Your house, the realization, typically contains various small units like rooms, doors, windows etc., and you can consider it as if the house is wrapping up those units or in other words those units are somehow related to each other by the entire house. Now, if you think about any moderate to complex program, it generally contains many many variables containing data as well as functions to perform computations with those variables. By the help of a class, these variables and functions are related to each other just like doors and windows and they all are the parts of the class. This is known as Encapsulation. Variables and functions defined within a class are called attributes (properties) and methods. When you create an object using the class, all of those attributes and methods will be available for it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Inheritance:&lt;/strong&gt; Generally, in a real life scenario you can have multiple houses, but many of them can contain same designs like same colour of the bedroom (your favorite colour of course), same floor area of kitchen etc. This actually means that you are following (rather mimicking) some (or all) of the designs of your past house into future ones. In other words, you can say, the houses you have built later on, are inheriting some (or all) of the designs from the initial house. While creating multiple classes, the programmer try to avoid writing same functions or incorporating same variables again and again. The concept inheritance allows a programmer to have all the attributes or methods available in parent class, in the child class as well.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Polymorphism:&lt;/strong&gt; The literal meaning of the word is something that is available in various forms but with the same name or any identifier. For example, your house could have multiple washroom, they might be different in terms of internal designs but they all are washrooms. Similarly, two or multiple classes can can contain one or more functions with same name but performing different activities. This idea is known as Polymorphism.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;designing-the-class&quot;&gt;Designing the class;&lt;/h2&gt;
+
+&lt;p&gt;As the title suggests, I will be covering the aforesaid concepts using &lt;strong&gt;R&lt;/strong&gt;. Although R is not a language where the analytics people generally implement OOP mostly because of the lack of awareness or simply not to follow the hard way. But R has several ecosystem for implementing OOP and eventually designing analytics solutions. One of the popular OOP ecosystems in R is &lt;strong&gt;R6&lt;/strong&gt;. It’s a third party package developed by Winston Chang* from the &lt;a href=&quot;https://www.rstudio.com/&quot;&gt;RStudio Team&lt;/a&gt;. It provides ways to create classes in R.&lt;/p&gt;
+
+&lt;p&gt;Before implementation, let’s discuss about the problem,&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Suppose, for curiosity, you want to generate random samples from various Gaussian Distribution parametrized by mean (μ) and standard deviation (σ). For example: if you put some specific values of μ and σ, then you have a specific Gaussian population and you want to have a random sample out of it.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s design the class to solve the problem,&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;# A class to generate sample from Gaussian Distribution
+# mean, standard-deviation and sample size are being 
+# expected to come from the user
+
+library(R6)
+library(ggplot2)
+
+GaussianSimulator &amp;lt;- R6Class(&amp;quot;GaussianSimulatorClass&amp;quot;,
+  public = list(
+    mu = NA,
+    sigma = NA,
+    n_sample = NA,
+    sample = NA,
+                       
+    initialize = function(mu, sigma, n_sample) {
+      # Object Initiator
+      # Args
+      #   mu: mean of the distribution
+      #   sigma: std. dev. of the distribution
+      #   n_sample: size of the sample
+                         
+      self$mu &amp;lt;- mu
+      self$sigma &amp;lt;- sigma
+      self$n_sample &amp;lt;- n_sample
+    },
+                       
+    get_sample_size = function() {
+      # getter method
+                         
+      return (self$n_sample)
+    },
+                       
+    set_sample_size = function(size) {
+      # setter method
+                         
+      self$n_sample = size
+    },
+                       
+    generate_sample = function() {
+      # Generates the random sample
+                         
+      self$sample &amp;lt;- rnorm(self$n_sample, self$mu, self$sigma)
+      return (self$sample)
+    },
+                       
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+                         
+      r &amp;lt;- list(sample.mean = mean(self$sample), 
+      sample.sd = sd(self$sample))
+      return (r)
+    },
+                       
+    plot_histogram = function(binwidth) {
+      p &amp;lt;- qplot(self$sample, geom = &amp;quot;histogram&amp;quot;,
+                 breaks = seq(130, 200, binwidth),
+                 colour = I(&amp;quot;black&amp;quot;), fill = I(&amp;quot;white&amp;quot;),
+                 xlab = &amp;quot;X&amp;quot;, ylab = &amp;quot;Count&amp;quot;) +
+            stat_function(
+              fun = function(x, mean, sd, n, bw){
+                      dnorm(x = x, mean = mean, sd = sd) * n * bw
+                    },
+                    args = c(mean = self$mu,
+                             sd = self$sigma, 
+                             n = self$n_sample, 
+                             bw = binwidth)
+            )
+      return (p)
+    }
+  )
+)
+
+#### Implementation ####
+sm &amp;lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) #creates a new object of the class
+r &amp;lt;- sm$generate_sample() #generates a random sample 
+basic.stats &amp;lt;- sm$compute_stats() #computes basic statistics of the sample
+p &amp;lt;- sm$plot_histogram(binwidth=2) #creates the histogram of the sample&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/koushikkhan/9e5d608d8ffc284476ad3989f3d6c32d.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Here we have the class ready. Now let’s discuss each and every unit (variable and function) within it.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;class name:&lt;/strong&gt; First thing is the usage of the function &lt;code class=&quot;highlighter-rouge&quot;&gt;R6Class()&lt;/code&gt;, it allows us to create the class and define it’s units. The name of the class is &lt;code class=&quot;highlighter-rouge&quot;&gt;GaussianSimulatorClass&lt;/code&gt; and the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;GaussianSimulator&lt;/code&gt; is used to store the address of the class created somewhere in the memory.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;‘public’ keyword:&lt;/strong&gt; The &lt;em&gt;public&lt;/em&gt; keyword is used to allow the user to interact with the components that it contains, like &lt;code class=&quot;highlighter-rouge&quot;&gt;mu&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sigma&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;n_sample&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt; and all the functions. On the contrary, if we would have used &lt;em&gt;private&lt;/em&gt;, then the user won’t be able to interact / use with them. It is customary to use private keyword to hide important components of the program from the user. It avoids unintentional fatal error during execution.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;attributes:&lt;/strong&gt; We have used four attributes in our class and these are &lt;code class=&quot;highlighter-rouge&quot;&gt;mu&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sigma&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;n_sample&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;sample&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;constructor:&lt;/strong&gt; Each class does have it’s constructor. A constructor is a simple function that is first executed while creating an object of the class. So if you provide some of the attributes while creating the object, it will pass those attributes to the internal attributes. Like, we have provided mu, sigma and n_sample through our constructor to initiate a specific Gaussian Distribution. Note one thing, if you don’t write your constructor explicitly, the OOP system creates a default constructor for it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;‘self’ keyword:&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; keyword is used to represent a placeholder of our object while we are designing the class itself. When you create an object of the class, internally &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; is replaced by the object name.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;getter and setter methods:&lt;/strong&gt; These are the utility functions to let the user know about internal data (attributes) or to change them as per users’ choice externally. For example, after creating an object, we can get the n_sample using &lt;code class=&quot;highlighter-rouge&quot;&gt;get_sample_size()&lt;/code&gt;, that is currently being used or we can change &lt;code class=&quot;highlighter-rouge&quot;&gt;n_sample&lt;/code&gt; by using &lt;code class=&quot;highlighter-rouge&quot;&gt;set_sample_size()&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;generate_sample()&lt;/code&gt; method:&lt;/strong&gt; This is one of the functions to achieve our goal. It generates the random sample of a specified size from a specified Gaussian Distribution.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;compute_stats()&lt;/code&gt; method:&lt;/strong&gt; This function is used to compute the sample mean and sample standard deviation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;plot_histogram()&lt;/code&gt; method:&lt;/strong&gt; This function is used to create a frequency type histogram from the sample you have generated. It has a parameter, binwidth, which is used to set the width of bins in the histogram.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;usage-of-the-class&quot;&gt;Usage of the class:&lt;/h2&gt;
+
+&lt;p&gt;Finally, it’s the time to use our class to solve the problem.&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;# Usage of the class
+
+# 1. create a new object of the class named `sm`
+sm &amp;lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) 
+
+# 2. generate a random sample
+r &amp;lt;- sm$generate_sample()
+
+# 3. compute basic ststistics of the sample
+basic.stats &amp;lt;- sm$compute_stats()
+
+# 4. create the histogram of the sample
+p &amp;lt;- sm$plot_histogram(binwidth = 2)
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/koushikkhan/9cded47d515faa76dba48c651d7cebd2.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Here is the histogram given below, that has been generated using &lt;code class=&quot;highlighter-rouge&quot;&gt;plot_histogram()&lt;/code&gt; method from the class.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dist.png?style=centerme&quot; alt=&quot;test&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That’s all. We have solved our problem using OOP and I hope you can now relate the concept of OOP to solve much more complex problems. I have kept the &lt;strong&gt;Inheritance&lt;/strong&gt; and &lt;strong&gt;Polymorphism&lt;/strong&gt; parts separated, you can find the second part here.&lt;/p&gt;
+
+&lt;p&gt;Please share your thoughts through the comments section below. It will help me to add new things or do more research. Happy Coding!&lt;/p&gt;</content><author><name></name></author><category term="R" /><category term="OOP" /><category term="R6" /><summary type="html">Introduction: Object Oriented Programming or simply called as OOP, is a different style of designing and solving problems using computer programs. While designing the solution of any problem, OOP helps us to relate various components of our program with real world entities. It makes the code more usable and easily maintainable, not only that, OOP helps to create composite data structures like linked list, trie etc. using primitive ones like integer, float, string etc. I will start this article with some theoretical basics of OOP followed by their implementations and some examples from Statistical Distributions, so that people like me who are coming from quantitative background (no so smart in Coding!) can easily relate to OOP with their fundamentals. Some basic terminologies: Class - The Template of your imagination: Let’s assume, you want to build your own house and the house plan is ready. Based on the plan, the builder will build the house. Here the actual house where you are going to stay is the realization coming out from that plan. In the world of programming, while developing any kind of software projects, people do have their plans as well. These are generally plans to receive various type of data as inputs, functions to manipulate those data and also the ways to let the human interact with the software. Such plans are called templates or classes. Object - Meet your imagination: You will definitely meet your imagination when the builder will make the house available for your stay. Similarly, in programming world such realization is available, which is called object. Object is very very important in programming without which you would never meet your imagination. Encapsulation - Wrapping up the units of your realization: Your house, the realization, typically contains various small units like rooms, doors, windows etc., and you can consider it as if the house is wrapping up those units or in other words those units are somehow related to each other by the entire house. Now, if you think about any moderate to complex program, it generally contains many many variables containing data as well as functions to perform computations with those variables. By the help of a class, these variables and functions are related to each other just like doors and windows and they all are the parts of the class. This is known as Encapsulation. Variables and functions defined within a class are called attributes (properties) and methods. When you create an object using the class, all of those attributes and methods will be available for it. Inheritance: Generally, in a real life scenario you can have multiple houses, but many of them can contain same designs like same colour of the bedroom (your favorite colour of course), same floor area of kitchen etc. This actually means that you are following (rather mimicking) some (or all) of the designs of your past house into future ones. In other words, you can say, the houses you have built later on, are inheriting some (or all) of the designs from the initial house. While creating multiple classes, the programmer try to avoid writing same functions or incorporating same variables again and again. The concept inheritance allows a programmer to have all the attributes or methods available in parent class, in the child class as well. Polymorphism: The literal meaning of the word is something that is available in various forms but with the same name or any identifier. For example, your house could have multiple washroom, they might be different in terms of internal designs but they all are washrooms. Similarly, two or multiple classes can can contain one or more functions with same name but performing different activities. This idea is known as Polymorphism. Designing the class; As the title suggests, I will be covering the aforesaid concepts using R. Although R is not a language where the analytics people generally implement OOP mostly because of the lack of awareness or simply not to follow the hard way. But R has several ecosystem for implementing OOP and eventually designing analytics solutions. One of the popular OOP ecosystems in R is R6. It’s a third party package developed by Winston Chang* from the RStudio Team. It provides ways to create classes in R. Before implementation, let’s discuss about the problem, Suppose, for curiosity, you want to generate random samples from various Gaussian Distribution parametrized by mean (μ) and standard deviation (σ). For example: if you put some specific values of μ and σ, then you have a specific Gaussian population and you want to have a random sample out of it. Let’s design the class to solve the problem, # A class to generate sample from Gaussian Distribution # mean, standard-deviation and sample size are being # expected to come from the user library(R6) library(ggplot2) GaussianSimulator &amp;lt;- R6Class(&amp;quot;GaussianSimulatorClass&amp;quot;, public = list( mu = NA, sigma = NA, n_sample = NA, sample = NA, initialize = function(mu, sigma, n_sample) { # Object Initiator # Args # mu: mean of the distribution # sigma: std. dev. of the distribution # n_sample: size of the sample self$mu &amp;lt;- mu self$sigma &amp;lt;- sigma self$n_sample &amp;lt;- n_sample }, get_sample_size = function() { # getter method return (self$n_sample) }, set_sample_size = function(size) { # setter method self$n_sample = size }, generate_sample = function() { # Generates the random sample self$sample &amp;lt;- rnorm(self$n_sample, self$mu, self$sigma) return (self$sample) }, compute_stats = function() { # Computes basic statistics of the sample r &amp;lt;- list(sample.mean = mean(self$sample), sample.sd = sd(self$sample)) return (r) }, plot_histogram = function(binwidth) { p &amp;lt;- qplot(self$sample, geom = &amp;quot;histogram&amp;quot;, breaks = seq(130, 200, binwidth), colour = I(&amp;quot;black&amp;quot;), fill = I(&amp;quot;white&amp;quot;), xlab = &amp;quot;X&amp;quot;, ylab = &amp;quot;Count&amp;quot;) + stat_function( fun = function(x, mean, sd, n, bw){ dnorm(x = x, mean = mean, sd = sd) * n * bw }, args = c(mean = self$mu, sd = self$sigma, n = self$n_sample, bw = binwidth) ) return (p) } ) ) #### Implementation #### sm &amp;lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) #creates a new object of the class r &amp;lt;- sm$generate_sample() #generates a random sample basic.stats &amp;lt;- sm$compute_stats() #computes basic statistics of the sample p &amp;lt;- sm$plot_histogram(binwidth=2) #creates the histogram of the sample Here we have the class ready. Now let’s discuss each and every unit (variable and function) within it. class name: First thing is the usage of the function R6Class(), it allows us to create the class and define it’s units. The name of the class is GaussianSimulatorClass and the variable GaussianSimulator is used to store the address of the class created somewhere in the memory. ‘public’ keyword: The public keyword is used to allow the user to interact with the components that it contains, like mu, sigma, n_sample, sample and all the functions. On the contrary, if we would have used private, then the user won’t be able to interact / use with them. It is customary to use private keyword to hide important components of the program from the user. It avoids unintentional fatal error during execution. attributes: We have used four attributes in our class and these are mu, sigma, n_sample and sample. constructor: Each class does have it’s constructor. A constructor is a simple function that is first executed while creating an object of the class. So if you provide some of the attributes while creating the object, it will pass those attributes to the internal attributes. Like, we have provided mu, sigma and n_sample through our constructor to initiate a specific Gaussian Distribution. Note one thing, if you don’t write your constructor explicitly, the OOP system creates a default constructor for it. ‘self’ keyword: self keyword is used to represent a placeholder of our object while we are designing the class itself. When you create an object of the class, internally self is replaced by the object name. getter and setter methods: These are the utility functions to let the user know about internal data (attributes) or to change them as per users’ choice externally. For example, after creating an object, we can get the n_sample using get_sample_size(), that is currently being used or we can change n_sample by using set_sample_size(). generate_sample() method: This is one of the functions to achieve our goal. It generates the random sample of a specified size from a specified Gaussian Distribution. compute_stats() method: This function is used to compute the sample mean and sample standard deviation. plot_histogram() method: This function is used to create a frequency type histogram from the sample you have generated. It has a parameter, binwidth, which is used to set the width of bins in the histogram. Usage of the class: Finally, it’s the time to use our class to solve the problem. # Usage of the class # 1. create a new object of the class named `sm` sm &amp;lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) # 2. generate a random sample r &amp;lt;- sm$generate_sample() # 3. compute basic ststistics of the sample basic.stats &amp;lt;- sm$compute_stats() # 4. create the histogram of the sample p &amp;lt;- sm$plot_histogram(binwidth = 2) Here is the histogram given below, that has been generated using plot_histogram() method from the class. That’s all. We have solved our problem using OOP and I hope you can now relate the concept of OOP to solve much more complex problems. I have kept the Inheritance and Polymorphism parts separated, you can find the second part here. Please share your thoughts through the comments section below. It will help me to add new things or do more research. Happy Coding!</summary></entry><entry><title type="html">A Not So Short Introduction to Object Oriented Programming using R: Part-2</title><link href="http://localhost:4000/blog/2019/05/26/oop-r-part-2" rel="alternate" type="text/html" title="A Not So Short Introduction to Object Oriented Programming using R: Part-2" /><published>2019-05-26T18:03:12+05:30</published><updated>2019-05-26T18:03:12+05:30</updated><id>http://localhost:4000/blog/2019/05/26/oop-r-part-2</id><content type="html" xml:base="http://localhost:4000/blog/2019/05/26/oop-r-part-2">&lt;h2 id=&quot;continuation&quot;&gt;Continuation:&lt;/h2&gt;
+
+&lt;p&gt;This is the second and last part of the story on the friendly introduction to OOP that I shared in the first post. If you have not yet gone through it, please follow the link to grasp the ideas first. For those, who have had a look, I hope you have enjoyed it. Here we are going to understand the concepts of &lt;strong&gt;Inheritance&lt;/strong&gt; and &lt;strong&gt;Polymorphism&lt;/strong&gt; in more detail. At the end of this post, you will be a lazy programmer (ha ha!) knowing how to efficiently reuse your previous code.&lt;/p&gt;
+
+&lt;p&gt;So let’s come back to the story…&lt;/p&gt;
+
+&lt;p&gt;The analogy of your house might not be completely suitable for understanding the idea behind inheritance, rather the real “you” (yes, you) could be the analogy. Typically we all had got something from our ancestors, naturally or legally…wasn’t it? For example, you might have got your favorite old piano from your grand father (legally) or you might have got the friendly nature like him (naturally). Whatever might be the case, you definitely have something new in you and that is completely yours. I bet you have it.&lt;/p&gt;
+
+&lt;p&gt;Now, in the programming world, programmers work with many many classes, where writing same methods (functionalities) or using same attributes again and again, are not good ideas. So, they have borrowed the idea from our human relationship as well - they have come up with the idea of Inheritance. Technically, the child class can have all the attributes and methods from the parent class, but still it can have some new attributes and methods, just like us. It’s fun…right? So, let’s explore the concept by a Statistics problem and little bit of coding.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;So you already have a class to generate random samples from a specified Gaussian Distribution of a specified sample size. Now, let’s say your objective is to extend (reuse) this class to do the same or something additional tasks for a log-normal Distribution.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; &lt;em&gt;A log-normal distribution is a continuous probability distribution, whose natural logarithm follows a normal distribution.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Obviously we are going to solve it by creating another class, but we have to make sure that we are not reinventing the wheel. For your convenience, the Gaussian Simulator class 
+has been embedded here:&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;# A class to generate sample from Gaussian Distribution
+# mean, standard-deviation and sample size are being 
+# expected to come from the user
+
+library(R6)
+library(ggplot2)
+
+GaussianSimulator &amp;lt;- R6Class(&amp;quot;GaussianSimulatorClass&amp;quot;,
+  public = list(
+    mu = NA,
+    sigma = NA,
+    n_sample = NA,
+    sample = NA,
+                       
+    initialize = function(mu, sigma, n_sample) {
+      # Object Initiator
+      # Args
+      #   mu: mean of the distribution
+      #   sigma: std. dev. of the distribution
+      #   n_sample: size of the sample
+                         
+      self$mu &amp;lt;- mu
+      self$sigma &amp;lt;- sigma
+      self$n_sample &amp;lt;- n_sample
+    },
+                       
+    get_sample_size = function() {
+      # getter method
+                         
+      return (self$n_sample)
+    },
+                       
+    set_sample_size = function(size) {
+      # setter method
+                         
+      self$n_sample = size
+    },
+                       
+    generate_sample = function() {
+      # Generates the random sample
+                         
+      self$sample &amp;lt;- rnorm(self$n_sample, self$mu, self$sigma)
+      return (self$sample)
+    },
+                       
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+                         
+      r &amp;lt;- list(sample.mean = mean(self$sample), 
+      sample.sd = sd(self$sample))
+      return (r)
+    },
+                       
+    plot_histogram = function(binwidth) {
+      p &amp;lt;- qplot(self$sample, geom = &amp;quot;histogram&amp;quot;,
+                 breaks = seq(130, 200, binwidth),
+                 colour = I(&amp;quot;black&amp;quot;), fill = I(&amp;quot;white&amp;quot;),
+                 xlab = &amp;quot;X&amp;quot;, ylab = &amp;quot;Count&amp;quot;) +
+            stat_function(
+              fun = function(x, mean, sd, n, bw){
+                      dnorm(x = x, mean = mean, sd = sd) * n * bw
+                    },
+                    args = c(mean = self$mu,
+                             sd = self$sigma, 
+                             n = self$n_sample, 
+                             bw = binwidth)
+            )
+      return (p)
+    }
+  )
+)
+
+#### Implementation ####
+sm &amp;lt;- GaussianSimulator$new(mu=165, sigma=6.6, n_sample=1000) #creates a new object of the class
+r &amp;lt;- sm$generate_sample() #generates a random sample 
+basic.stats &amp;lt;- sm$compute_stats() #computes basic statistics of the sample
+p &amp;lt;- sm$plot_histogram(binwidth=2) #creates the histogram of the sample&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/koushikkhan/9e5d608d8ffc284476ad3989f3d6c32d.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;To convert a sample, pulled from Normal population, into a log-normal sample, we just need to apply exponentiation. The log-normal class is provided here, which is technically an extension of the previous class:&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;LogNormalSimulator &amp;lt;- R6Class(&amp;quot;LogNormalSimulatorClass&amp;quot;,
+  inherit = GaussianSimulator,
+  public = list(
+    log_normal_sample = NA,
+    initialize = function(mu, sigma, n_sample) {
+      super$initialize(mu = mu, sigma = sigma, n_sample = n_sample)
+    },
+    
+    generate_lognormal_sample = function() {
+      normal_sample &amp;lt;- self$generate_sample()
+      self$log_normal_sample &amp;lt;- exp(normal_sample)
+      return (self$log_normal_sample)
+    },
+    
+    compute_stats = function() {
+      # Computes basic statistics of the sample
+      
+      r &amp;lt;- list(sample.mean = mean(self$log_normal_sample), 
+                sample.sd = sd(self$log_normal_sample))
+      return (r)
+    }
+  )
+)&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/koushikkhan/ba1e3719ab417fe14be85d33ac894c3a.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Now let’s discuss about the components of the new class,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;line # 1:&lt;/strong&gt; As earlier, it starts with defining the class with a proper name.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 2:&lt;/strong&gt; we are inheriting all the attributes and methods from the previous class, also called super class or parent class.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 3:&lt;/strong&gt; defining the list containing attributes and methods that are available publicly to the user&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 4:&lt;/strong&gt; defining the attributes specific to this class, also known as child class.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 5 and line # 6:&lt;/strong&gt; defining the constructor function for child class. Note that it also expects all the parameters which were there in the super class’s constructor 	function. This is so because we are going to call super class’s constructor function at line # 6.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 9:&lt;/strong&gt; defining a method specific to the child class.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;line # 10:&lt;/strong&gt; calling super class’s method generate_sample(). Note that it is possible because we have already inherited everything from super class.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Rest of the things are self explanatory.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementation&quot;&gt;Implementation:&lt;/h2&gt;
+
+&lt;p&gt;The implementation is pretty straight forward here, just create object of the &lt;code class=&quot;highlighter-rouge&quot;&gt;LogNormalSimulator&lt;/code&gt; class and you will be ready to access the properties and methods right away,&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;ln.object &amp;lt;- LogNormalSimulator$new(mu = 5, sigma = 0.5, n_sample = 100000)
+ln.sample &amp;lt;- test$generate_lognormal_sample()
+ln.object$compute_stats()&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/koushikkhan/5d937c6b8546ce2dfe45117c6d11528b.js&quot;&gt; &lt;/script&gt;
+
+&lt;h2 id=&quot;polymorphism-and-method-overriding&quot;&gt;Polymorphism and Method Overriding:&lt;/h2&gt;
+
+&lt;p&gt;There can be scenarios where a method defined in the super class, may not be a good fit for the child class. In that case, the same method (keeping the same name) is defined and implemented in the child class with a different logic. In our case the method &lt;code class=&quot;highlighter-rouge&quot;&gt;compute_stats()&lt;/code&gt; has been defined in both the classes with slightly different logic (identify it!). This is also known as &lt;em&gt;method overriding&lt;/em&gt;. The ability to use the same name of a method for different purposes or using it in different forms is known as &lt;em&gt;Polymorphism&lt;/em&gt;. It allows the user to use the method covering various situations.&lt;/p&gt;
+
+&lt;p&gt;That’s all. Here the second part ends.&lt;/p&gt;
+
+&lt;p&gt;Please share your thoughts through the comments section below. It will definitely encourage me to come up with new materials in future. Thank you.&lt;/p&gt;</content><author><name></name></author><category term="R" /><category term="OOP" /><category term="R6" /><summary type="html">Continuation: This is the second and last part of the story on the friendly introduction to OOP that I shared in the first post. If you have not yet gone through it, please follow the link to grasp the ideas first. For those, who have had a look, I hope you have enjoyed it. Here we are going to understand the concepts of Inheritance and Polymorphism in more detail. At the end of this post, you will be a lazy programmer (ha ha!) knowing how to efficiently reuse your previous code. So let’s come back to the story… The analogy of your house might not be completely suitable for understanding the idea behind inheritance, rather the real “you” (yes, you) could be the analogy. Typically we all had got something from our ancestors, naturally or legally…wasn’t it? For example, you might have got your favorite old piano from your grand father (legally) or you might have got the friendly nature like him (naturally). Whatever might be the case, you definitely have something new in you and that is completely yours. I bet you have it. Now, in the programming world, programmers work with many many classes, where writing same methods (functionalities) or using same attributes again and again, are not good ideas. So, they have borrowed the idea from our human relationship as well - they have come up with the idea of Inheritance. Technically, the child class can have all the attributes and methods from the parent class, but still it can have some new attributes and methods, just like us. It’s fun…right? So, let’s explore the concept by a Statistics problem and little bit of coding. So you already have a class to generate random samples from a specified Gaussian Distribution of a specified sample size. Now, let’s say your objective is to extend (reuse) this class to do the same or something additional tasks for a log-normal Distribution. Note: A log-normal distribution is a continuous probability distribution, whose natural logarithm follows a normal distribution. Obviously we are going to solve it by creating another class, but we have to make sure that we are not reinventing the wheel. For your convenience, the Gaussian Simulator class has been embedded here: &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta http-equiv=&amp;quot;Content-type&amp;quot; content=&amp;quot;text/html; charset=utf-8&amp;quot;&amp;gt; &amp;lt;meta http-equiv=&amp;quot;Content-Security-Policy&amp;quot; content=&amp;quot;default-src &amp;#39;none&amp;#39;; style-src &amp;#39;unsafe-inline&amp;#39;; img-src data:; connect-src &amp;#39;self&amp;#39;&amp;quot;&amp;gt; &amp;lt;title&amp;gt;Site not found &amp;amp;middot; GitHub Pages&amp;lt;/title&amp;gt; &amp;lt;style type=&amp;quot;text/css&amp;quot; media=&amp;quot;screen&amp;quot;&amp;gt; body { background-color: #f1f1f1; margin: 0; font-family: &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; } .container { margin: 50px auto 40px auto; width: 600px; text-align: center; } a { color: #4183c4; text-decoration: none; } a:hover { text-decoration: underline; } h1 { width: 800px; position:relative; left: -100px; letter-spacing: -1px; line-height: 60px; font-size: 60px; font-weight: 100; margin: 0px 0 50px 0; text-shadow: 0 1px 0 #fff; } p { color: rgba(0, 0, 0, 0.5); margin: 20px 0; line-height: 1.6; } ul { list-style: none; margin: 25px 0; padding: 0; } li { display: table-cell; font-weight: bold; width: 1%; } .logo { display: inline-block; margin-top: 35px; } .logo-img-2x { display: none; } @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and ( min--moz-device-pixel-ratio: 2), only screen and ( -o-min-device-pixel-ratio: 2/1), only screen and ( min-device-pixel-ratio: 2), only screen and ( min-resolution: 192dpi), only screen and ( min-resolution: 2dppx) { .logo-img-1x { display: none; } .logo-img-2x { display: inline-block; } } #suggestions { margin-top: 35px; color: #ccc; } #suggestions a { color: #666666; font-weight: 200; font-size: 14px; margin: 0 10px; } &amp;lt;/style&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div class=&amp;quot;container&amp;quot;&amp;gt; &amp;lt;h1&amp;gt;404&amp;lt;/h1&amp;gt; &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;There isn&amp;#39;t a GitHub Pages site here.&amp;lt;/strong&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt; If you&amp;#39;re trying to publish one, &amp;lt;a href=&amp;quot;https://help.github.com/pages/&amp;quot;&amp;gt;read the full documentation&amp;lt;/a&amp;gt; to learn how to set up &amp;lt;strong&amp;gt;GitHub Pages&amp;lt;/strong&amp;gt; for your repository, organization, or user account. &amp;lt;/p&amp;gt; &amp;lt;div id=&amp;quot;suggestions&amp;quot;&amp;gt; &amp;lt;a href=&amp;quot;https://githubstatus.com&amp;quot;&amp;gt;GitHub Status&amp;lt;/a&amp;gt; &amp;amp;mdash; &amp;lt;a href=&amp;quot;https://twitter.com/githubstatus&amp;quot;&amp;gt;@githubstatus&amp;lt;/a&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;a href=&amp;quot;/&amp;quot; class=&amp;quot;logo logo-img-1x&amp;quot;&amp;gt; &amp;lt;img width=&amp;quot;32&amp;quot; height=&amp;quot;32&amp;quot; title=&amp;quot;&amp;quot; alt=&amp;quot;&amp;quot; src=&amp;quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFMTZCRDY3REIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFMTZCRDY3RUIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdCQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjdDQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+SM9MCAAAA+5JREFUeNrEV11Ik1EY3s4+ddOp29Q5b0opCgKFsoKoi5Kg6CIhuwi6zLJLoYLopq4qsKKgi4i6CYIoU/q5iDAKs6syoS76IRWtyJ+p7cdt7sf1PGOD+e0c3dygAx/67ZzzPM95/877GYdHRg3ZjMXFxepQKNS6sLCwJxqNNuFpiMfjVs4ZjUa/pmmjeD6VlJS8NpvNT4QQ7mxwjSsJiEQim/1+/9lgMHgIr5ohuxG1WCw9Vqv1clFR0dCqBODElV6v90ogEDjGdYbVjXhpaendioqK07CIR7ZAqE49PT09BPL2PMgTByQGsYiZlQD4uMXtdr+JxWINhgINYhGT2MsKgMrm2dnZXgRXhaHAg5jEJodUAHxux4LudHJE9RdEdA+i3Juz7bGHe4mhE9FNrgwBCLirMFV9Okh5eflFh8PR5nK5nDabrR2BNJlKO0T35+Li4n4+/J+/JQCxhmu5h3uJoXNHPbmWZAHMshWB8l5/ipqammaAf0zPDDx1ONV3vurdidqwAQL+pEc8sLcAe1CCvQ3YHxIW8Pl85xSWNC1hADDIv0rIE/o4J0k3kww4xSlwIhcq3EFFOm7KN/hUGOQkt0CFa5WpNJlMvxBEz/IVQAxg/ZRZl9wiHA63yDYieM7DnLP5CiAGsC7I5sgtYKJGWe2A8seFqgFJrJjEPY1Cn3pJ8/9W1e5VWsFDTEmFrBcoDhZJEQkXuhICMyKpjhahqN21hRYATKfUOlDmkygrR4o4C0VOLGJKrOITKB4jijzdXygBKixyC5TDQdnk/Pz8qRw6oOWGlsTKGOQW6OH6FBWsyePxdOXLTgxiyebILZCjz+GLgMIKnXNzc49YMlcRdHXcSwxFVgTInQhC9G33UhNoJLuqq6t345p9y3eUy8OTk5PjAHuI9uo4b07FBaOhsu0A4Unc+T1TU1Nj3KsSSE5yJ65jqF2DDd8QqWYmAZrIM2VlZTdnZmb6AbpdV9V6ec9znf5Q7HjYumdRE0JOp3MjitO4SFa+cZz8Umqe3TCbSLvdfkR/kWDdNQl5InuTcysOcpFT35ZrbBxx4p3JAHlZVVW1D/634VRt+FvLBgK/v5LV9WS+10xMTEwtRw7XvqOL+e2Q8V3AYIOIAXQ26/heWVnZCVfcyKHg2CBgTpmPmjYM8l24GyaUHyaIh7XwfR9ErE8qHoDfn2LTNAVC0HX6MFcBIP8Bi+6F6cdW/DICkANRfx99fEYFQ7Nph5i/uQiA214gno7K+guhaiKg9gC62+M8eR7XsBsYJ4ilam60Fb7r7uAj8wFyuwM1oIOWgfmDy6RXEEQzJMPe23DXrVS7rtyD3Df8z/FPgAEAzWU5Ku59ZAUAAAAASUVORK5CYII=&amp;quot;&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;a href=&amp;quot;/&amp;quot; class=&amp;quot;logo logo-img-2x&amp;quot;&amp;gt; &amp;lt;img width=&amp;quot;32&amp;quot; height=&amp;quot;32&amp;quot; title=&amp;quot;&amp;quot; alt=&amp;quot;&amp;quot; src=&amp;quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpEQUM1QkUxRUI0MUMxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpEQUM1QkUxRkI0MUMxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdGQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjgwQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+hfPRaQAAB6lJREFUeNrsW2mME2UYbodtt+2222u35QheoCCYGBQligIJgkZJNPzgigoaTEj8AdFEMfADfyABkgWiiWcieK4S+QOiHAYUj2hMNKgYlEujpNttu9vttbvdw+chU1K6M535pt3ubHCSyezR+b73eb73+t7vrfXsufOW4bz6+vom9/b23ovnNNw34b5xYGAgODg46Mbt4mesVmsWd1qSpHhdXd2fuP/Afcput5/A88xwymcdBgLqenp6FuRyuWV4zu/v759QyWBjxoz5t76+/gun09mK5xFyakoCAPSaTCazNpvNPoYVbh6O1YKGRF0u13sNDQ27QMzfpiAAKj0lnU6/gBVfAZW2WWpwwVzy0IgP3G73FpjI6REhAGA9qVRqA1b9mVoBVyIC2tDi8Xg24+dUzQiAbS/s7Ox8G2o/3mKCC+Zw0efzPQEfcVjYrARX3dbV1bUtHo8fMgt42f+Mp0yUTVQbdWsAHVsikdiHkHaPxcQXQufXgUBgMRxme9U0AAxfH4vFvjM7eF6UkbJS5qoQwEQGA57Ac5JllFyUVZZ5ckUEgMVxsK2jlSYzI+QXJsiyjzNEAJyJAzb/KQa41jJKL8pODMQiTEAymXw5n8/P0IjD3bh7Rgog59aanxiIRTVvV/oj0tnHca/WMrVwODwB3raTGxzkBg/gnZVapFV62Wy2n5AO70HM/5wbJ0QnXyQSaVPDIuNZzY0V3ntHMwxiwHA0Gj2Np7ecIBDgaDAYXKCQJM1DhrgJ3nhulcPbl8j4NmHe46X/g60fwbz3aewjkqFQaAqebWU1AOqyQwt8Id6qEHMc97zu7u7FGGsn7HAiVuosVw7P35C1nccdgSCxop1dHeZswmfHMnxBo6ZTk+jN8dl/vF7vWofDsa+MLN9oEUBMxOb3+1eoEsBVw6Zmua49r8YmhAKDiEPcMwBsxMiqQ+ixzPFxZyqRpXARG/YOr1ObFJ0gUskXBbamcR1OKmMUvDxHRAu8/LmY3jFLMUpFqz9HxG65smYJdyKyECOxDiEAe/p1gjF2oonivZAsxVgl2daa4EQWCW6J55qFAFFZiJWYLxNQy2qOSUzGRsyXCUDIeliwAHEO4WSlWQBRFoZakXcKmCXmyXAKs0Ve9vl8q42WoIYpJU4hV3hKcNs8m9gl7p/xQ73eF5kB4j5mNrWmTJRNwAzqiV1CxjVTZCIkEq+Z1bZFZSN2CenmVAFVy4Plz8xKAGWjjAKFk6lCBMDR/MJjLLMSQNm43xAiQKTaA+9/wewhDjL+JVI1kkTSSOTcKbMTwPqESAot6dn6Fr1gHwVJju6IRuyiByPuUUBAg5DGkAgBmxlvdgIEK9gDkohdY/BJo4CAG0R8miRSsGABkgVQs4KXu098IgUXSSRsFAoKZiVAVDY2WUiiPTjYRi41KwGisrGsLtlsth8Fiwnz2fBkQvWfRtlE3iF2yW63/yCacXZ1dW02GwGyTFaRd4idJnCKHRaCxYRHoG5LTKT6SyiToP1fJHbmAYPYRR0UnZQtMnA6s0zg+GZBlt0Gdo7EPHgpE3Q6nZ8YyLhc8Xj8MJh/aKTAY+5FPAKHLE7RdwuYJZmNwzyCMkBCYyKROJBMJl9B/PXXCjjmCmDOVzH3fiPpObEWGqoKe4EBl8v1hlqsdLvd23mkxHM9pc9kMpmno9HoeTii7ewbHEZPPx1ztLS1tV3AnGuMjiNjvbQFuHw6zDo5By7dTPAQNBgMLrRarTkSls1mnwT7uwp9virx9QzbW/HuV/j5d/b+6jniKlllP8lkeONJDk+dq9GsQTnC4fB1heO0K47Hwe7WdDr9nAKgXwOBwHI+C45Htj1d6sd429TUNEcmUdc+PRaLHcvn87dXW4ugzdsaGxufL94NFv9zi1J7GVbhlvb2dnaJ3SVrxfc+n2+NTsZ7/H7/Mr3g5XdSIHyJSH1PZ+7fToyl2+ErqilgZ4NaLYB9goVGaHjR93Hv1ZrU4XDsFT20kH3PObzbWk0CgG1jacVIUnAQb9F+VexyLMzkpcLv0IJV7AHQIOCAUYHx7v5qgScmYHtTqSAyZLEJTK22Bie4iq3xsqpm4SAf9Hq9a2DnJ4uLK3SEULcdRvp3i3zHySqpficxEdsQc1NrlYXXvR+O7qASSezXB+h1SuUomgg9LL8BUoV4749EIolKh+EiqWmqVEZlDgHks2pxHw7xTqUQw9J5NcAXOK10AGIoZ6Zli6JY6Z1Q461KoZ4NiKLHarW+KDsxlDUPHZ5zPQZqUVDPJsTqb5n9malbpAh8C2XXDLl62+WZIDFRUlNVOiwencnNU3aQEkL+cDMSoLvZo2fQB7AJssNAuFuvorlDVVkkg2I87+jo2K2QAVphDrfyViK5VqtO34OkaxXCp+7drdDBCAdubm6eidX+2WwqT5komwh4YQLk+H4aE93h8Xg2gvHekQZOGSgLZTLyDTLJ4Lx9/KZWKBSainT4Iy3FqQBfnUZR42PKQFksBr9QKVXCPusD3OiA/RkQ5kP8qV/Jl1WywAp/6+dcmPM2zL1UrUahe4JqfnWWKXIul3uUbfP8njAFLW1OFr3gdFtZ72cNH+PtQT7/brW+NXqJAHh0y9V8/U/A1U7AfwIMAD7mS3pCbuWJAAAAAElFTkSuQmCC&amp;quot;&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; To convert a sample, pulled from Normal population, into a log-normal sample, we just need to apply exponentiation. The log-normal class is provided here, which is technically an extension of the previous class: LogNormalSimulator &amp;lt;- R6Class(&amp;quot;LogNormalSimulatorClass&amp;quot;, inherit = GaussianSimulator, public = list( log_normal_sample = NA, initialize = function(mu, sigma, n_sample) { super$initialize(mu = mu, sigma = sigma, n_sample = n_sample) }, generate_lognormal_sample = function() { normal_sample &amp;lt;- self$generate_sample() self$log_normal_sample &amp;lt;- exp(normal_sample) return (self$log_normal_sample) }, compute_stats = function() { # Computes basic statistics of the sample r &amp;lt;- list(sample.mean = mean(self$log_normal_sample), sample.sd = sd(self$log_normal_sample)) return (r) } ) ) Now let’s discuss about the components of the new class, line # 1: As earlier, it starts with defining the class with a proper name. line # 2: we are inheriting all the attributes and methods from the previous class, also called super class or parent class. line # 3: defining the list containing attributes and methods that are available publicly to the user line # 4: defining the attributes specific to this class, also known as child class. line # 5 and line # 6: defining the constructor function for child class. Note that it also expects all the parameters which were there in the super class’s constructor function. This is so because we are going to call super class’s constructor function at line # 6. line # 9: defining a method specific to the child class. line # 10: calling super class’s method generate_sample(). Note that it is possible because we have already inherited everything from super class. Rest of the things are self explanatory. Implementation: The implementation is pretty straight forward here, just create object of the LogNormalSimulator class and you will be ready to access the properties and methods right away, ln.object &amp;lt;- LogNormalSimulator$new(mu = 5, sigma = 0.5, n_sample = 100000) ln.sample &amp;lt;- test$generate_lognormal_sample() ln.object$compute_stats() Polymorphism and Method Overriding: There can be scenarios where a method defined in the super class, may not be a good fit for the child class. In that case, the same method (keeping the same name) is defined and implemented in the child class with a different logic. In our case the method compute_stats() has been defined in both the classes with slightly different logic (identify it!). This is also known as method overriding. The ability to use the same name of a method for different purposes or using it in different forms is known as Polymorphism. It allows the user to use the method covering various situations. That’s all. Here the second part ends. Please share your thoughts through the comments section below. It will definitely encourage me to come up with new materials in future. Thank you.</summary></entry><entry><title type="html">Embedding Mathematics in MS Powerpoint slides</title><link href="http://localhost:4000/blog/2017/07/18/write-math-in-powerpoint" rel="alternate" type="text/html" title="Embedding Mathematics in MS Powerpoint slides" /><published>2017-07-18T00:00:00+05:30</published><updated>2017-07-18T00:00:00+05:30</updated><id>http://localhost:4000/blog/2017/07/18/write-math-in-powerpoint</id><content type="html" xml:base="http://localhost:4000/blog/2017/07/18/write-math-in-powerpoint">&lt;p&gt;Have you ever faced difficulties to create math-heavy technical slides for your upcoming talk? I hope you have.
+If you are a $\LaTeX$ geek, then possibly you have used Beamer, but believe me or not, it is time consuming.&lt;/p&gt;
+
+&lt;p&gt;This post will talk about creating math-heavy slides using PowerPoint.&lt;/p&gt;
+
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Windows and Office Powerpoint:&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Here I am assuming you are using Microsoft Windows OS and Powerpoint installed. I have tested this on Powerpoint 2010,
+ but I’m sure that the plugin we are going to use, will work with newer version of Powerpoint as well.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Getting your $\LaTeX$ distribution:&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Next thing that you need is a $\LaTeX$ processing engine. &lt;a href=&quot;https://miktex.org/&quot;&gt;Miktex&lt;/a&gt; would be good one for Windows platform. &lt;a href=&quot;https://miktex.org/download&quot;&gt;Download&lt;/a&gt; the Miktex setup following your os version as well as system architecture, and install it
+ right away following the instructions properly.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;IguanaTex plugin:&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;The last thing we need is the plugin. Download it from &lt;a href=&quot;http://www.jonathanleroux.org/software/iguanatex/download.html&quot;&gt;here&lt;/a&gt;. Now follow the steps,
+ below to install it in Powerpoint:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;open a blank presentation and go to $\text{File} \rightarrow \text{Options} \rightarrow \text{Add-ins}$&lt;/li&gt;
+      &lt;li&gt;open the drop down list under $\text{Manage}$ and choose $\text{PowerPoint Add-ins}$ and select $\text{Go}$,
+you would get a new window $\text{Add-ins}$&lt;/li&gt;
+      &lt;li&gt;select the option $\text{Add New…}$ and locate the plugin that you’ve just downloaded and close it&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;If everything goes right, IguanaTex has now been installed. Restart the Powerpoint and you will get
+ &lt;strong&gt;IguanaTex&lt;/strong&gt; menu under the menubar.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-insert-latex-symbols-and-equations&quot;&gt;How to insert $\LaTeX$ symbols and equations&lt;/h2&gt;
+
+&lt;p&gt;Start with a new presentation or you can open a file created earlier. Make your template ready, it is not mandatory, just for your own use.
+Click on the &lt;strong&gt;IguanaTex&lt;/strong&gt; menu from the menubar and select &lt;strong&gt;New LaTeX display&lt;/strong&gt;. You would get a new window created by the plugin as below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/display_latex.png?style=centerme&quot; alt=&quot;test&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, you can insert your own $\LaTeX$ preamble over there and also insert external packages if those are already available in your system.
+Now you are ready to put actual $\LaTeX$ code within &lt;code class=&quot;highlighter-rouge&quot;&gt;\begin{document}&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;\end{document}&lt;/code&gt;, once completed, click on $\text{Generate}$ button. An image
+of the newly created symbol or equation would be generated. Now, keep that image at the correct place as per your need.&lt;/p&gt;
+
+&lt;p&gt;That’s it. Isn’t it simple?&lt;/p&gt;
+
+&lt;p&gt;Hope you enjoyed it. Happy $\LaTeX$-ing with Powerpoint.&lt;/p&gt;</content><author><name></name></author><summary type="html">Have you ever faced difficulties to create math-heavy technical slides for your upcoming talk? I hope you have. If you are a $\LaTeX$ geek, then possibly you have used Beamer, but believe me or not, it is time consuming. This post will talk about creating math-heavy slides using PowerPoint. Prerequisites Windows and Office Powerpoint: Here I am assuming you are using Microsoft Windows OS and Powerpoint installed. I have tested this on Powerpoint 2010, but I’m sure that the plugin we are going to use, will work with newer version of Powerpoint as well. Getting your $\LaTeX$ distribution: Next thing that you need is a $\LaTeX$ processing engine. Miktex would be good one for Windows platform. Download the Miktex setup following your os version as well as system architecture, and install it right away following the instructions properly. IguanaTex plugin: The last thing we need is the plugin. Download it from here. Now follow the steps, below to install it in Powerpoint: open a blank presentation and go to $\text{File} \rightarrow \text{Options} \rightarrow \text{Add-ins}$ open the drop down list under $\text{Manage}$ and choose $\text{PowerPoint Add-ins}$ and select $\text{Go}$, you would get a new window $\text{Add-ins}$ select the option $\text{Add New…}$ and locate the plugin that you’ve just downloaded and close it If everything goes right, IguanaTex has now been installed. Restart the Powerpoint and you will get IguanaTex menu under the menubar. How to insert $\LaTeX$ symbols and equations Start with a new presentation or you can open a file created earlier. Make your template ready, it is not mandatory, just for your own use. Click on the IguanaTex menu from the menubar and select New LaTeX display. You would get a new window created by the plugin as below: As you can see, you can insert your own $\LaTeX$ preamble over there and also insert external packages if those are already available in your system. Now you are ready to put actual $\LaTeX$ code within \begin{document} and \end{document}, once completed, click on $\text{Generate}$ button. An image of the newly created symbol or equation would be generated. Now, keep that image at the correct place as per your need. That’s it. Isn’t it simple? Hope you enjoyed it. Happy $\LaTeX$-ing with Powerpoint.</summary></entry></feed>
