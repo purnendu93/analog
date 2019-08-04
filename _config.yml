@@ -1,6 +1,7 @@
 markdown: kramdown
 exclude: ['README.md']
 permalink: /blog/:year/:month/:day/:title
+baseurl: /analog
 plugins:
   - jekyll-gist
 theme: jekyll-theme-slate
